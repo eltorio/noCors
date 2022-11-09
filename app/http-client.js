@@ -5,7 +5,11 @@ import got from 'got';
 const DEFAULT_USER_AGENT = `Mozilla/5.0 (compatible; noCors/${global.AO_VERSION}; +https://nocors.authee.cf/)`
 
 export default (function defaultGot() {
+  const storageAdapter = new QuickLRU({ maxSize: 1000 })
+
   const gotOptions = {
+    cache: storageAdapter,
+    http2: true,
     agent: {
       http: new HttpAgent({
         keepAlive: false,
@@ -28,11 +32,11 @@ export default (function defaultGot() {
     }
   }
 
-  const storageAdapter = new QuickLRU({ maxSize: 1000 })
+  
 
   gotOptions.handlers = [
     (options, next) => {
-      gotOptions.cache = storageAdapter
+      console.log(`Sending ${options.method} to ${options.url}`);
       return next(options)
     },
   ]
