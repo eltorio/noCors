@@ -3,14 +3,14 @@
  * written by Gabriel Nunes <gabriel@multiverso.me>
  * http://github.com/gnuns
  */
-const express = require('express')
+import express from 'express';
 
-const { version } = require('./package.json')
+import packageVersion from './package.json' assert {type: "json"};
 // yep, global. it's ok
 // https://softwareengineering.stackexchange.com/a/47926/289420
-global.AO_VERSION = version
+global.AO_VERSION = packageVersion.version
 
-const processRequest = require('./app/process-request')
+import processRequest from './app/process-request.js';
 
 function enableCORS(req, res, next) {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*')
@@ -23,11 +23,11 @@ function enableCORS(req, res, next) {
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PATCH, PUT, DELETE'
   )
-  res.header('Via', `allOrigins v${version}`)
+  res.header('Via', `noCors v${packageVersion.version}`)
   next()
 }
 
-module.exports = (function app() {
+export default (function app() {
   const app = express()
 
   app.set('case sensitive routing', false)
@@ -39,4 +39,4 @@ module.exports = (function app() {
   app.all('/:format(get|raw|json|info)', processRequest)
 
   return app
-})()
+}());

@@ -4,8 +4,9 @@
  * http://github.com/gnuns
  */
 
-const app = require('./app.js')
-const port = process.env.PORT || 1458
+import app from './app.js';
 
-console.log(`Starting allOrigins v${global.AO_VERSION}`)
+const port = process.env.PORT || 80
+
+console.log(`Starting noCors v${global.AO_VERSION}`)
 app.listen(port, () => console.log('Listening on', port))

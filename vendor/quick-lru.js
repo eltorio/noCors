@@ -1,6 +1,6 @@
 // Source: https://github.com/sindresorhus/quick-lru
 
-module.exports = class QuickLRU {
+export default class QuickLRU {
   constructor(options = {}) {
     if (!(options.maxSize && options.maxSize > 0)) {
       throw new TypeError('`maxSize` must be a number greater than 0')
@@ -268,4 +268,4 @@ module.exports = class QuickLRU {
 
     return Math.min(this._size + oldCacheSize, this.maxSize)
   }
-}
+};

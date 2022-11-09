@@ -1,7 +1,6 @@
-const { got } = require('./http-client')
-const iconv = require('iconv-lite')
-
-module.exports = getPage
+import httpGot from './http-client.js';
+import iconv from 'iconv-lite';
+export default getPage;
 
 function getPage({ url, format, requestMethod, charset }) {
   if (format === 'info' || requestMethod === 'HEAD') {
@@ -26,12 +25,13 @@ async function getPageInfo(url) {
 }
 
 async function getRawPage(url, requestMethod, charset) {
-  const { content, response, error } = await request(
+const { content, response, error } = await request(
     url,
     requestMethod,
     true,
     charset
   )
+
   if (error) return processError(error)
 
   const contentLength = Buffer.byteLength(content)
@@ -70,7 +70,7 @@ async function request(url, requestMethod, raw = false, charset = null) {
       decompress: !raw,
     }
 
-    const response = await got(url, options)
+    const response = await httpGot.got(url, options)
     if (options.method === 'HEAD') return { response }
 
     return processContent(response, charset)

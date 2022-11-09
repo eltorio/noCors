@@ -1,4 +1,4 @@
-module.exports = function (debug = false) {
+export  function getLogger(debug = false) {
   const logger = debug ? defaultLogger() : false
 
   return {

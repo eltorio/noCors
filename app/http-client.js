@@ -1,10 +1,10 @@
-const HttpAgent = require('agentkeepalive')
-const QuickLRU = require('../vendor/quick-lru')
-const got = require('got')
+import HttpAgent from 'agentkeepalive';
+import QuickLRU from '../vendor/quick-lru.js';
+import got from 'got';
 
-const DEFAULT_USER_AGENT = `Mozilla/5.0 (compatible; allOrigins/${global.AO_VERSION}; +http://allorigins.win/)`
+const DEFAULT_USER_AGENT = `Mozilla/5.0 (compatible; noCors/${global.AO_VERSION}; +https://nocors.authee.cf/)`
 
-module.exports = (function defaultGot() {
+export default (function defaultGot() {
   const gotOptions = {
     agent: {
       http: new HttpAgent({
@@ -40,4 +40,4 @@ module.exports = (function defaultGot() {
   const gotInstance = got.extend(gotOptions)
 
   return { got: gotInstance }
-})()
+}());
